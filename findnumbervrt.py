@@ -7,6 +7,7 @@ def usage():
     print '\t\t\t-h, --help:  View this message'
     print '\n\t\t\t-EXAMPLE: findnumbervrt.py -n 631234567'
     sys.exit(1)
+    
 number = None    
 opts, args = getopt(sys.argv[1:], 'hn:',["help","number="])
 for o,v in opts:
@@ -15,6 +16,7 @@ for o,v in opts:
     elif o in ("-n", "--number"):
         number = v
 if number is None: number = raw_input("Enter phone number: ") 
+'''Conector'''
 tn = telnetlib.Telnet('10.89.61.20', '5023')
 tn.read_until('login'.encode())
 tn.write('dadmin\n'.encode())
@@ -32,6 +34,7 @@ try:
     print 'Number ' + number + ' found in VRT: %s, position: %s' %(output[103:].split('\t')[1],output[103:].split('\t')[3][:2])
 except IndexError:
     print 'Number ' + number + ' not found'
+'''Logout'''
 tn.write('clogoff\n')
 tn.write('t\n')
 sleep(0.1)
