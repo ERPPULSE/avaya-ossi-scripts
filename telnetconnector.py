@@ -16,4 +16,8 @@ def connector(co):
     tn.write(comm.encode())
     tn.write('t\n'.encode())
     output = tn.read_until('t\n'.encode()).decode('utf-8')
+    tn.write('clogoff\n'.encode())
+    tn.write('t\n'.encode())
+    sleep(0.2)
+    tn.write('y\n'.encode())
     return output
