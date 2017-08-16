@@ -1,6 +1,7 @@
 import telnetlib
 import re
 import sys
+from telnetconnector import connector
 from getopt import getopt
 from time import sleep
 
@@ -18,26 +19,10 @@ for o,v in opts:
         number = v
 if number is None: number = str(input("Enter phone number: "))
 if re.match(r'[6-7,9]{1}[0-9]{8}', number) and len(number) == 9:
-    tn = telnetlib.Telnet('10.89.61.20', '5023')
-    tn.read_until('login'.encode())
-    tn.write('dadmin\n'.encode())
-    tn.read_until('Password'.encode())
-    tn.write('dadmin01\n'.encode())
-    tn.read_until('Pin'.encode())
-    tn.write('dadmin01\n'.encode())
-    tn.read_until('Terminal'.encode())
-    tn.write('ossi\n'.encode())
-    tn.read_until('t\n'.encode())
-    tn.write(('clist usage digit-string ' + number + '\n').encode())
-    tn.write('t\n'.encode())
-    output = tn.read_until('t\n'.encode())
+    output = connector('list usage digit-string ' + number)
     if len(output) < 128:
-        print((output[82:123]).decode('utf-8').replace('\t', ' '))
+        print((output[82:123]).replace('\t', ' '))
     else:
         print('No data in the system to list')
-    tn.write('clogoff\n'.encode())
-    tn.write('t\n'.encode())
-    sleep(0.1)
-    tn.write('y\n'.encode())
 else:
     print('Error in entered number')
