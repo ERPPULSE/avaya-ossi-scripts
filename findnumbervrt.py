@@ -1,9 +1,6 @@
-import telnetlib
-import re
-import sys
+import re, sys
 from telnetconnector import connector
 from getopt import getopt
-from time import sleep
 
 def usage():
     print('\t\t\t-h, --help:  View this message')
