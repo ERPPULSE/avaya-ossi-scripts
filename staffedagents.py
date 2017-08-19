@@ -1,4 +1,3 @@
-import telnetlib
 from telnetconnector import connector
 
 output = connector('li age')
