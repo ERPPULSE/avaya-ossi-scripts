@@ -1,5 +1,4 @@
 import telnetlib
-import re
 from time import sleep
 
 def paramset(co, fi, par):
