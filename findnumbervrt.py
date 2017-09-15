@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import re, sys
 from telnetconnector import connector
 from getopt import getopt

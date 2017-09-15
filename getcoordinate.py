@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from telnetconnector import connector
 
 output = connector(str(input('Enter command to get field address:')))
