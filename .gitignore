@@ -1,3 +1,6 @@
+# Used for configuration parameters
+/Get_station_name/*.ini
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
