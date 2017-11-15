@@ -6,7 +6,20 @@ import telnetlib, os
 from configparser import ConfigParser
 from time import sleep
 
+def translater(inputstring):
+    '''функція перетворює текст введений анг. літерами на
+українскі літери та робить всі перші букви слів великими'''
+    eng = 'qwertyuiop[]\\asdfghjkl;\'zxcvbnm,./'
+    ua = 'йцукенгшщзхї\фівапролджєячсмитьбю.'
+    trans = str.maketrans(eng, ua)
+    if len(inputstring) > 0 and inputstring[0] == '~': #якщо вхідна строка більша 0 і починається з ~
+        return f'{inputstring.lower().translate(trans).title()}'[1:] #перевести строку в нижній регістр перекласти побуквенно строку і всі перші слова в сроці зробити великими
+    else:
+        return inputstring
+    
 def connector(co):
+    '''Функція приймає команду станції як аргумент і видає
+результат на введену команду'''
     comm = 'c' + str(co) + '\r\n'
     tn = telnetlib.Telnet(host, '5022', 10)
     tn.read_until('Login:'.encode())
@@ -27,15 +40,15 @@ def connector(co):
     return output.decode('utf-8')
 
 config = ConfigParser()
-config.read('conf.ini')
+config.read('conf.ini')#файл з параметрами для входу в станцію
 host = config.get('Definity', 'host')
 login = config.get('Definity', 'login')
 password = config.get('Definity', 'password')
-output = connector('list sta 2000 count 100')
-filename = 'name.txt'
-if os.path.isfile(filename) and os.path.getsize(filename) > 0:
-    os.remove(filename)
-with open(filename, 'a') as f:
-    for i in output.split('\nn')[1:]:
-        f.write('Number - {}, Name - {}\n'.format(i.split('\t')[0][2:], i.split('\t')[2]))
+output = connector('list sta 2000 count 800')#команда в станції
+filename = 'name.txt'#вихідний файл
+if os.path.isfile(filename) and os.path.getsize(filename) > 0:#якщо файл існує та його розмір більший 0, видалити файл
+    os.remove(filename)#видалити файл
+with open(filename, 'a') as f:#створити і відкрити файл
+    for i in output.split('\nn')[1:]:#розбити результат роботи функції на список по визначники, почати відлік з другого елементу
+        f.write('Number - {}, Name - {}\n'.format(i.split('\t')[0][2:], translater(i.split('\t')[2])))
     f.close()
