@@ -1,6 +1,8 @@
 # Used for configuration parameters
 /station_names/*.ini
 /station_names/*.txt
+*.ini
+*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
