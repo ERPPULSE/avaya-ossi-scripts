@@ -35,7 +35,7 @@ output = connector('list sta 2000 count 100')
 filename = 'name.txt'
 if os.path.isfile(filename) and os.path.getsize(filename) > 0:
     os.remove(filename)
-with open('names.txt', 'a') as f:
+with open(filename, 'a') as f:
     for i in output.split('\nn')[1:]:
         f.write('Number - {}, Name - {}\n'.format(i.split('\t')[0][2:], i.split('\t')[2]))
     f.close()
